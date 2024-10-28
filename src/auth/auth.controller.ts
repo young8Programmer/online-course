@@ -1,34 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Controller, Post, Body, Res, HttpStatus, UseGuards, Put, Delete, Param } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { CreateUserDto } from './dto/create-user.dto'
+import { Response } from 'express'
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post("register")
+  async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const { access_token, refresh_token } = await this.authService.register(createUserDto)
+    return res.status(HttpStatus.CREATED).json({ 
+      message: "User registratsiyadan muffaqqiyatli otdi"
+    })
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post("login")
+  async login(@Body() { email, password }: { email: string; password: string }, @Res() res: Response) {
+    const { access_token, refresh_token } = await this.authService.login(email, password)
+    res.cookie("access_token", access_token, { httpOnly: true })
+    res.cookie("refresh_token", refresh_token, { httpOnly: true })
+    return res.status(HttpStatus.OK).json({ 
+      message: "login muffaqqiyatli",
+      access_token,
+      refresh_token
+    },
+    )
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Post("create-user")
+  async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+    const user = await this.authService.register(createUserDto)
+    return res.status(HttpStatus.CREATED).json(user)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @Put("update-user/:id")
+  async updateUser(@Param("id") id: number, @Body() updateUserDto: CreateUserDto, @Res() res: Response) {
+    const user = await this.authService.updateUser(id, updateUserDto)
+    return res.status(HttpStatus.OK).json(user)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Delete("delete-user/:id")
+  async deleteUser(@Param("id") id: number, @Res() res: Response) {
+    await this.authService.deleteUser(id)
+    return res.status(HttpStatus.OK).json({ message: "o'chirildi" })
+  }
+
+  @Post("logout")
+  logout(@Res() res: Response) {
+    res.clearCookie("access_token")
+    res.clearCookie("refresh_token")
+    return res.status(HttpStatus.OK).json({ message: "chiqish muffaqqiyatlli" })
   }
 }

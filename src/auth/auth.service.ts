@@ -1,26 +1,54 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async register(createUserDto: CreateUserDto) {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
+    const user = this.userRepository.create({ ...createUserDto, password: hashedPassword })
+    await this.userRepository.save(user)
+
+    const access_token = this.jwtService.sign({ email: user.email, sub: user.id })
+    const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id }, { expiresIn: '7d' })
+    
+    return { access_token, refresh_token }
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async updateUser(id: number, updateUserDto: CreateUserDto) {
+    const user = await this.userRepository.findOneBy({ id })
+    if (!user) {
+      throw new Error('Nimadir xato')
+    }
+    await this.userRepository.update(id, updateUserDto)
+    return this.userRepository.findOneBy({ id })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
+  async deleteUser(id: number) {
+    const user = await this.userRepository.findOneBy({ id })
+    if (!user) {
+      throw new Error('Nimadir xato')
+    }
+    await this.userRepository.remove(user)
   }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async login(email: string, password: string) {
+    const user = await this.userRepository.findOne({ where: { email } })
+    if (user && await bcrypt.compare(password, user.password)) {
+      const access_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role })
+      const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role }, { expiresIn: '7d' })
+      return { access_token, refresh_token }
+    }
+    throw new Error('Nimadir xato')
   }
 }
