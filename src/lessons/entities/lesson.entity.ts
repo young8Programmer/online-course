@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Module } from '../../module/entities/module.entity';
+import { Modules } from '../../module/entities/module.entity';
 
 @Entity()
 export class Lesson {
@@ -15,6 +15,6 @@ export class Lesson {
   @Column()
   type: 'video' | 'text';
 
-  @ManyToOne(() => Module, (module) => module.lessons)
-  module: Module;
+  @ManyToOne(() => Modules, (module) => module.lessons)
+  module: Modules;
 }

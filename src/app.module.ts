@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
-import { ModuleModule } from './module/module.module';
+import { ModulesModule } from './module/module.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { ResultsModule } from './results/results.module';
@@ -21,7 +21,7 @@ import { ResultsModule } from './results/results.module';
     }),
     AuthModule,
     CoursesModule,
-    ModuleModule,
+    ModulesModule,
     LessonsModule,
     AssignmentsModule,
     ResultsModule,

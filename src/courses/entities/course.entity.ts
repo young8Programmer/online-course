@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Module } from '../../module/entities/module.entity';
+import { Modules } from '../../module/entities/module.entity';
 
 @Entity()
 export class Course {
@@ -26,7 +26,4 @@ export class Course {
 
   @Column("simple-array", { default: [] })
   enrolledUsers: number[]
-
-  @OneToMany(() => Module, (module) => module.course)
-  modules: Module[]
 }

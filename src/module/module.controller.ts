@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ModuleService } from './module.service';
+import { Controller, Get, Post, Body, Param, Put, Delete } from "@nestjs/common";
+import { ModulesService } from './module.service';
 import { CreateModuleDto } from './dto/create-module.dto';
-import { UpdateModuleDto } from './dto/update-module.dto';
 
-@Controller('module')
-export class ModuleController {
-  constructor(private readonly moduleService: ModuleService) {}
+@Controller('modules')
+export class ModulesController {
+  constructor(private readonly modulesService: ModulesService) {}
 
-  @Post()
-  create(@Body() createModuleDto: CreateModuleDto) {
-    return this.moduleService.create(createModuleDto);
+  @Post("create")
+  createModule(@Body() createModuleDto: CreateModuleDto) {
+    return this.modulesService.createModule(createModuleDto)
   }
 
-  @Get()
-  findAll() {
-    return this.moduleService.findAll();
+  @Get("/courses/:courseId")
+  findAllModules(@Param("courseId") courseId: number) {
+    return this.modulesService.findAllModules(courseId)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.moduleService.findOne(+id);
+  @Get("/:moduleId")
+  findOneModule(@Param("moduleId") moduleId: number) {
+    return this.modulesService.findOneModule(moduleId)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateModuleDto: UpdateModuleDto) {
-    return this.moduleService.update(+id, updateModuleDto);
+  @Get("/:moduleId/lessons")
+  findLessonsByModule(@Param("moduleId") moduleId: number) {
+    return this.modulesService.findLessonsByModule(moduleId)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.moduleService.remove(+id);
+  @Put("update/:moduleId")
+  updateModule(@Param("moduleId") moduleId: number, @Body() updateModuleDto: CreateModuleDto) {
+    return this.modulesService.updateModule(moduleId, updateModuleDto)
+  }
+
+  @Delete("delete/:moduleId")
+  removeModule(@Param("moduleId") moduleId: number) {
+    return this.modulesService.removeModule(moduleId)
   }
 }
