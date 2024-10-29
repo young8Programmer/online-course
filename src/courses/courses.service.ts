@@ -16,11 +16,11 @@ export class CoursesService {
   async createCourse(createCourseDto): Promise<any> {
     const duplicateCourse = await this.coursesRepository.findOne({ where: { name: createCourseDto.name } })
     if (duplicateCourse) {
-      throw new BadRequestException("Bu nomdagi kurs allaqachon mavjud")
+      throw new BadRequestException("nu nomdagi kurs mavjud")
     }
     const course = this.coursesRepository.create(createCourseDto)
     await this.coursesRepository.save(course)
-    return { message: "Kurs muvaffaqiyatli yaratildi", course }
+    return { message: "kurs yaratildi", course }
   }
 
   async findAllCourses(filterDto): Promise<any> {
@@ -32,17 +32,17 @@ export class CoursesService {
     }
 
     if (search) {
-      query.andWhere("(course.name LIKE :search OR course.description LIKE :search)", { search: `%${search}%` })
+      query.andWhere("(course.name LIkE :search OR course.description LIkE :search)", { search: `%${search}%` })
     }
 
     const courses = await query.getMany()
-    return courses.length > 0 ? courses : { message: "Kurslar topilmadi" }
+    return courses.length > 0 ? courses : { message: "kurslar topilmadi" }
   }
 
   async findOneCourse(id: number): Promise<Course> {
     const course = await this.coursesRepository.findOneBy({id})
     if (!course) {
-      throw new NotFoundException("Kurs topilmadi")
+      throw new NotFoundException("kurs topilmadi")
     }
     return course
   }
@@ -59,7 +59,7 @@ export class CoursesService {
     const enrolledUsers = course.enrolledUsers.map(user => Number(user))
   
     if (enrolledUsers.includes(userId)) {
-      return { message: "Siz allaqachon bu kursga yozilgansiz" }
+      return { message: "Siz bu kursga yozilgansiz" }
     }
   
     if (!course.enrolledUsers) {
@@ -78,13 +78,13 @@ export class CoursesService {
   async updateCourse(id: number, updateCourseDto): Promise<any> {
     const course = await this.coursesRepository.findOneBy({ id })
     if (!course) {
-      throw new NotFoundException("Kurs topilmadi")
+      throw new NotFoundException("kurs topilmadi")
     }
     Object.assign(course, updateCourseDto)
     await this.coursesRepository.save(course)
 
     return {
-      message: "Kurs yangilandi",
+      message: "kurs yangilandi",
       course
     }
   }
@@ -92,9 +92,9 @@ export class CoursesService {
   async removeCourse(id: number): Promise<any> {
     const course = await this.coursesRepository.findOneBy({ id })
     if (!course) {
-      throw new NotFoundException("Kurs topilmadi")
+      throw new NotFoundException("kurs topilmadi")
     }
     await this.coursesRepository.remove(course)
-    return { message: "Kurs o'chirildi" }
+    return { message: "kurs o'chirildi" }
   }
 }

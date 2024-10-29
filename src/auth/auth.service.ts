@@ -22,14 +22,14 @@ export class AuthService {
 
   async updateUser(id: number, updateUserDto: CreateUserDto) {
     const user = await this.userRepository.findOneBy({ id })
-    if (!user) throw new Error('User topilmadi')
+    if (!user) throw new Error('user topilmadi')
     await this.userRepository.update(id, updateUserDto)
     return this.userRepository.findOneBy({ id })
   }
 
   async deleteUser(id: number) {
     const user = await this.userRepository.findOneBy({ id })
-    if (!user) throw new Error('User topilmadi')
+    if (!user) throw new Error('user topilmadi')
     await this.userRepository.remove(user)
   }
 
@@ -40,6 +40,6 @@ export class AuthService {
       const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role }, { expiresIn: '7d' })
       return { access_token, refresh_token }
     }
-    throw new Error('Nimadir xato')
+    throw new Error('nimadir xato')
   }
 }

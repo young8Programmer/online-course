@@ -10,7 +10,7 @@ export class AuthController {
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     await this.authService.register(createUserDto)
-    return res.status(HttpStatus.CREATED).json({ message: "User registratsiyadan muvaffaqiyatli o'tdi" })
+    return res.status(HttpStatus.CREATED).json({ message: "User registratsiyadan o'tdi" })
   }
 
   @Post("login")
@@ -37,6 +37,6 @@ export class AuthController {
   logout(@Res() res: Response) {
     res.clearCookie("access_token")
     res.clearCookie("refresh_token")
-    return res.status(HttpStatus.OK).json({ message: "Chiqish muvaffaqiyatli" })
+    return res.status(HttpStatus.OK).json({ message: "Chiqish" })
   }
 }

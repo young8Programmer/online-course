@@ -1,28 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Modules } from '../../module/entities/module.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Modules } from '../../module/entities/module.entity'
 
 @Entity()
 export class Course {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  description: string;
+  description: string
 
   @Column()
-  price: number;
+  price: number
 
   @Column()
-  teacher: string;
+  teacher: string
 
   @Column()
-  category: string;
+  category: string
 
   @Column()
-  level: string;
+  level: string
 
   @Column("simple-array", { default: [] })
   enrolledUsers: number[]

@@ -8,6 +8,7 @@ export class AssignmentsController {
 
   @Post(":moduleId/assignment")
   createAssignment(@Param("moduleId") moduleId: number, @Body() createAssignmentDto: CreateAssignmentDto) {
+    
     return this.assignmentsService.createAssignment(moduleId, createAssignmentDto)
   }
 

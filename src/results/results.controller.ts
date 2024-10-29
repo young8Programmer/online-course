@@ -6,13 +6,13 @@ import { CreateResultDto } from './dto/create-result.dto';
 export class ResultsController {
   constructor(private readonly resultsService: ResultsService) {}
 
-  @Post()
+  @Post("create")
   createResult(@Body() createResultDto: CreateResultDto) {
     return this.resultsService.createResult(createResultDto)
   }
 
-  @Get('user/:userId')
-  getUserResults(@Param('userId') userId: number) {
+  @Get("user/:userId")
+  getUserResults(@Param("userId") userId: number) {
     return this.resultsService.getUserResults(userId)
   }
 }

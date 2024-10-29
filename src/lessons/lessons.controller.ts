@@ -6,7 +6,7 @@ import { CreateLessonDto } from './dto/create-lesson.dto';
 export class LessonsController {
   constructor(private readonly lessonsService: LessonsService) {}
 
-  @Post()
+  @Post("create")
   createLesson(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonsService.createLesson(createLessonDto)
   }

@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Repository, In } from 'typeorm'
 import { Modules } from './entities/module.entity'
 import { Lesson } from '../lessons/entities/lesson.entity'
 import { CreateModuleDto } from './dto/create-module.dto'
+import { Course } from '../courses/entities/course.entity'
 
 @Injectable()
 export class ModulesService {
@@ -11,52 +12,68 @@ export class ModulesService {
     @InjectRepository(Modules)
     private modulesRepository: Repository<Modules>,
     @InjectRepository(Lesson)
-    private lessonsRepository: Repository<Lesson>
+    private lessonsRepository: Repository<Lesson>,
+    @InjectRepository(Course)
+    private coursesRepository: Repository<Course>
   ) {}
 
   async createModule(createModuleDto: CreateModuleDto): Promise<any> {
     const existingModule = await this.modulesRepository.findOne({ where: { title: createModuleDto.title } })
-
     if (existingModule) {
-      throw new NotFoundException("Bunday modul mavjud")
+      throw new NotFoundException("bunday modul mavjud")
     }
+
     const module = this.modulesRepository.create(createModuleDto)
     await this.modulesRepository.save(module)
-    return { message: "Modul muvaffaqiyatli yaratildi", module }
+    return { message: "modul yaratildi", module }
   }
 
   async findAllModules(courseId: number): Promise<Modules[]> {
-    return this.modulesRepository.find({ where: { id:courseId } })
+    const course = await this.coursesRepository.findOne({ where: { id: courseId } })
+    if (!course) {
+      throw new NotFoundException("bunday id li kurs yo'q")
+    }
+
+    const lessons = await this.lessonsRepository.find({ where: { courseId } })
+    const lessonIds = lessons.map(lesson => lesson.id)
+    return this.modulesRepository.find({ where: { lessons: { id: In(lessonIds) } } })
   }
 
   async findOneModule(moduleId: number): Promise<Modules> {
     const module = await this.modulesRepository.findOne({ where: { id: moduleId } })
     if (!module) {
-      throw new NotFoundException("Modul topilmadi")
+      throw new NotFoundException("modul topilmadi")
     }
     return module
   }
 
   async findLessonsByModule(moduleId: number): Promise<Lesson[]> {
+    const module = await this.modulesRepository.findOne({ where: { id: moduleId } })
+    if (!module) {
+      throw new NotFoundException("bunday id li modul yo'q")
+    }
+
     return this.lessonsRepository.find({ where: { modules: { id: moduleId } } })
   }
 
   async updateModule(moduleId: number, updateModuleDto: CreateModuleDto): Promise<any> {
     const module = await this.modulesRepository.findOne({ where: { id: moduleId } })
     if (!module) {
-      throw new NotFoundException("Modul topilmadi")
+      throw new NotFoundException("modul topilmadi")
     }
+
     Object.assign(module, updateModuleDto)
     await this.modulesRepository.save(module)
-    return { message: "Modul yangilandi", module }
+    return { message: "modul yangilandi", module }
   }
 
   async removeModule(moduleId: number): Promise<any> {
     const module = await this.modulesRepository.findOne({ where: { id: moduleId } })
     if (!module) {
-      throw new NotFoundException("Modul topilmadi")
+      throw new NotFoundException("modul topilmadi")
     }
+
     await this.modulesRepository.remove(module)
-    return { message: "Modul o'chirildi" }
+    return { message: "modul o'chirildi" }
   }
 }
