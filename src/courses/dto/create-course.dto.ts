@@ -23,4 +23,6 @@ export class CreateCourseDto {
   @IsString()
   @IsNotEmpty()
   level: string;
+
+  enrolledUsers: number[]
 }

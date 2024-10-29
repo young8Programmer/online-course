@@ -24,6 +24,9 @@ export class Course {
   @Column()
   level: string;
 
+  @Column("simple-array", { default: "" })
+  enrolledUsers: number[];
+
   @OneToMany(() => Module, (module) => module.course)
-  modules: Module[];
+  modules: Module[]
 }

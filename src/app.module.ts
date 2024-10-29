@@ -15,7 +15,7 @@ import { ResultsModule } from './results/results.module';
       port: 5432,
       username: "postgres",
       password: "1234",
-      database: "online_course",
+      database: "nestjs_app",
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
