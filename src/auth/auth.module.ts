@@ -23,17 +23,23 @@ export class AuthModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .forRoutes(
-        "auth/create-user",
         "auth/update-user/:id",
-        "auth/delete-user/:id"
+        "auth/delete-user/:id",
+        "courses/create",
+        "courses/update/:id",
+        "courses/delete/:id",
+        "courses/all",
+        "courses/findOne/:id"
       );
 
     consumer
       .apply(RoleMiddleware(['admin']))
       .forRoutes(
-        "auth/create-user",
         "auth/update-user/:id",
-        "auth/delete-user/:id"
+        "auth/delete-user/:id",
+        "courses/create",
+        "courses/update/:id",
+        "courses/delete/:id"
       );
   }
 }

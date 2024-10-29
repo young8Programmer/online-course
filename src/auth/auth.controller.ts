@@ -1,55 +1,42 @@
-import { Controller, Post, Body, Res, HttpStatus, UseGuards, Put, Delete, Param } from '@nestjs/common'
-import { AuthService } from './auth.service'
-import { CreateUserDto } from './dto/create-user.dto'
-import { Response } from 'express'
+import { Controller, Post, Body, Res, HttpStatus, Put, Delete, Param } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { CreateUserDto } from './dto/create-user.dto';
+import { Response } from 'express';
 
-@Controller("auth")
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const { access_token, refresh_token } = await this.authService.register(createUserDto)
-    return res.status(HttpStatus.CREATED).json({ 
-      message: "User registratsiyadan muffaqqiyatli otdi"
-    })
+    await this.authService.register(createUserDto);
+    return res.status(HttpStatus.CREATED).json({ message: "User registratsiyadan muvaffaqiyatli o'tdi" });
   }
 
   @Post("login")
   async login(@Body() { email, password }: { email: string; password: string }, @Res() res: Response) {
-    const { access_token, refresh_token } = await this.authService.login(email, password)
-    res.cookie("access_token", access_token, { httpOnly: true })
-    res.cookie("refresh_token", refresh_token, { httpOnly: true })
-    return res.status(HttpStatus.OK).json({ 
-      message: "login muffaqqiyatli",
-      access_token,
-      refresh_token
-    },
-    )
-  }
-
-  @Post("create-user")
-  async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const user = await this.authService.register(createUserDto)
-    return res.status(HttpStatus.CREATED).json(user)
+    const { access_token, refresh_token } = await this.authService.login(email, password);
+    res.cookie("access_token", access_token, { httpOnly: true });
+    res.cookie("refresh_token", refresh_token, { httpOnly: true });
+    return res.status(HttpStatus.OK).json({ message: "Login muvaffaqiyatli", access_token, refresh_token });
   }
 
   @Put("update-user/:id")
   async updateUser(@Param("id") id: number, @Body() updateUserDto: CreateUserDto, @Res() res: Response) {
-    const user = await this.authService.updateUser(id, updateUserDto)
-    return res.status(HttpStatus.OK).json(user)
+    const user = await this.authService.updateUser(id, updateUserDto);
+    return res.status(HttpStatus.OK).json(user);
   }
 
   @Delete("delete-user/:id")
   async deleteUser(@Param("id") id: number, @Res() res: Response) {
-    await this.authService.deleteUser(id)
-    return res.status(HttpStatus.OK).json({ message: "o'chirildi" })
+    await this.authService.deleteUser(id);
+    return res.status(HttpStatus.OK).json({ message: "O'chirildi" });
   }
 
   @Post("logout")
   logout(@Res() res: Response) {
-    res.clearCookie("access_token")
-    res.clearCookie("refresh_token")
-    return res.status(HttpStatus.OK).json({ message: "chiqish muffaqqiyatlli" })
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+    return res.status(HttpStatus.OK).json({ message: "Chiqish muvaffaqiyatli" });
   }
 }

@@ -15,40 +15,31 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
-    const user = this.userRepository.create({ ...createUserDto, password: hashedPassword })
-    await this.userRepository.save(user)
-
-    const access_token = this.jwtService.sign({ email: user.email, sub: user.id })
-    const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id }, { expiresIn: '7d' })
-    
-    return { access_token, refresh_token }
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const user = this.userRepository.create({ ...createUserDto, password: hashedPassword });
+    await this.userRepository.save(user);
   }
 
   async updateUser(id: number, updateUserDto: CreateUserDto) {
-    const user = await this.userRepository.findOneBy({ id })
-    if (!user) {
-      throw new Error('Nimadir xato')
-    }
-    await this.userRepository.update(id, updateUserDto)
-    return this.userRepository.findOneBy({ id })
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) throw new Error('User topilmadi');
+    await this.userRepository.update(id, updateUserDto);
+    return this.userRepository.findOneBy({ id });
   }
 
   async deleteUser(id: number) {
-    const user = await this.userRepository.findOneBy({ id })
-    if (!user) {
-      throw new Error('Nimadir xato')
-    }
-    await this.userRepository.remove(user)
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) throw new Error('User topilmadi');
+    await this.userRepository.remove(user);
   }
 
   async login(email: string, password: string) {
-    const user = await this.userRepository.findOne({ where: { email } })
+    const user = await this.userRepository.findOne({ where: { email } });
     if (user && await bcrypt.compare(password, user.password)) {
-      const access_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role })
-      const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role }, { expiresIn: '7d' })
-      return { access_token, refresh_token }
+      const access_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role });
+      const refresh_token = this.jwtService.sign({ email: user.email, sub: user.id, role: user.role }, { expiresIn: '7d' });
+      return { access_token, refresh_token };
     }
-    throw new Error('Nimadir xato')
+    throw new Error('Nimadir xato');
   }
 }
