@@ -29,7 +29,8 @@ export class AuthModule implements NestModule {
         "courses/update/:id",
         "courses/delete/:id",
         "courses/all",
-        "courses/findOne/:id"
+        "courses/findOne/:id",
+        "courses/:id/enroll"
       );
 
     consumer

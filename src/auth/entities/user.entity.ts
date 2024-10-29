@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Result } from '../../results/entities/result.entity';
 
-@Entity('users')
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -8,7 +9,7 @@ export class User {
   @Column()
   name: string;
 
-  @Column({ unique: true })
+  @Column()
   email: string;
 
   @Column()
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ default: "student" })
   role: string;
+
+  @OneToMany(() => Result, (result) => result.user)
+  results: Result[];
 }

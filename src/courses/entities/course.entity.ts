@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Module } from '../../module/entities/module.entity';
 
-@Entity('courses')
+@Entity()
 export class Course {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,4 +23,7 @@ export class Course {
 
   @Column()
   level: string;
+
+  @OneToMany(() => Module, (module) => module.course)
+  modules: Module[];
 }

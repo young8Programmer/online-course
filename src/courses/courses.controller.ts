@@ -1,33 +1,37 @@
-import { Controller, Post, Get, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { CoursesService } from './courses.service';
-import { CreateCourseDto } from './dto/create-course.dto';
 
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post("create")
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return this.coursesService.create(createCourseDto);
+  createCourse(@Body() createCourseDto) {
+    return this.coursesService.createCourse(createCourseDto);
   }
 
   @Get("all")
-  findAll() {
-    return this.coursesService.findAll();
+  findAllCourses(@Query() filterDto) {
+    return this.coursesService.findAllCourses(filterDto);
   }
 
-  @Get("findOne/:id")
-  findOne(@Param("id") id: number) {
-    return this.coursesService.findOne(id);
+  @Get('findOne/:id')
+  findOneCourse(@Param('id') id: number) {
+    return this.coursesService.findOneCourse(id);
   }
 
-  @Put("update/:id")
-  update(@Param("id") id: number, @Body() updateCourseDto: CreateCourseDto) {
-    return this.coursesService.update(id, updateCourseDto);
+  @Post(':id/enroll')
+  enrollUser(@Param('id') courseId: number, @Body('userId') userId: number) {
+    return this.coursesService.enrollUser(courseId, userId);
   }
 
-  @Delete("delete/:id")
-  remove(@Param("id") id: number) {
-    return this.coursesService.remove(id);
+  @Put('update/:id')
+  updateCourse(@Param('id') id: number, @Body() updateCourseDto) {
+    return this.coursesService.updateCourse(id, updateCourseDto);
+  }
+
+  @Delete('delete/:id')
+  removeCourse(@Param('id') id: number) {
+    return this.coursesService.removeCourse(id);
   }
 }
