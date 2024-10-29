@@ -1,11 +1,10 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateModuleDto {
-  @IsString()
   @IsNotEmpty()
-  title: string;
+  @IsString()
+  title: string
 
   @IsString()
-  @IsOptional()
-  description?: string; // Modul tavsifi
+  description: string
 }

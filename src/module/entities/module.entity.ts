@@ -1,17 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Lesson } from '../../lessons/entities/lesson.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Lesson } from '../../lessons/entities/lesson.entity'
 
 @Entity()
 export class Modules {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  title: string;
+  title: string
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description: string
 
-  @OneToMany(() => Lesson, (lesson) => lesson.module)
-  lessons: Lesson[];
+  @OneToMany(() => Lesson, (lesson) => lesson.modules)
+  lessons: Lesson[]
 }

@@ -1,28 +1,28 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber } from 'class-validator'
 
 export class CreateCourseDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name: string
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description: string
 
   @IsNumber()
-  price: number;
+  price: number
 
   @IsString()
   @IsNotEmpty()
-  teacher: string;
+  teacher: string
 
   @IsString()
   @IsNotEmpty()
-  category: string;
+  category: string
 
   @IsString()
   @IsNotEmpty()
-  level: string;
+  level: string
 
   enrolledUsers: number[]
 }

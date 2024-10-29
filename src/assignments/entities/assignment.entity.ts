@@ -1,21 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Modules } from '../../module/entities/module.entity';
-import { Result } from '../../results/entities/result.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Assignment {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  title: string;
+  lessonId: number
 
   @Column()
-  description: string;
+  title: string
+
+  @Column({ type: 'text', nullable: true })
+  description: string
 
   @Column()
-  score: number;
-
-  @OneToMany(() => Result, (result) => result.assignment)
-  results: Result[];
+  score: number
 }

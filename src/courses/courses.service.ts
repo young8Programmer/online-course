@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Course } from './entities/course.entity';
-import { User } from '../auth/entities/user.entity';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { Course } from './entities/course.entity'
+import { User } from '../auth/entities/user.entity'
 
 @Injectable()
 export class CoursesService {
@@ -14,7 +14,7 @@ export class CoursesService {
   ) {}
 
   async createCourse(createCourseDto): Promise<any> {
-    const duplicateCourse = await this.coursesRepository.findOne({ where: { name: createCourseDto.name } });
+    const duplicateCourse = await this.coursesRepository.findOne({ where: { name: createCourseDto.name } })
     if (duplicateCourse) {
       throw new BadRequestException("Bu nomdagi kurs allaqachon mavjud")
     }
@@ -66,10 +66,10 @@ export class CoursesService {
       course.enrolledUsers = []
     }
 
-    course.enrolledUsers.push(userId.toString());
-    await this.coursesRepository.save(course);
+    course.enrolledUsers.push(userId.toString())
+    await this.coursesRepository.save(course)
   
-    return { message: "Siz kursga muvaffaqiyatli yozildingiz" };
+    return { message: "Siz kursga yozildingiz" }
   }
   
   
@@ -84,7 +84,7 @@ export class CoursesService {
     await this.coursesRepository.save(course)
 
     return {
-      message: "Kurs muvaffaqiyatli yangilandi",
+      message: "Kurs yangilandi",
       course
     }
   }
@@ -94,7 +94,7 @@ export class CoursesService {
     if (!course) {
       throw new NotFoundException("Kurs topilmadi")
     }
-    await this.coursesRepository.remove(course);
-    return { message: "Kurs muvaffaqiyatli o'chirildi" }
+    await this.coursesRepository.remove(course)
+    return { message: "Kurs o'chirildi" }
   }
 }

@@ -1,26 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { CreateResultDto } from './dto/create-result.dto';
-import { UpdateResultDto } from './dto/update-result.dto';
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { Result } from './entities/result.entity'
+import { CreateResultDto } from './dto/create-result.dto'
 
 @Injectable()
 export class ResultsService {
-  create(createResultDto: CreateResultDto) {
-    return 'This action adds a new result';
+  constructor(
+    @InjectRepository(Result)
+    private resultsRepository: Repository<Result>
+  ) {}
+
+  async createResult(createResultDto: CreateResultDto): Promise<any> {
+    const result = this.resultsRepository.create(createResultDto)
+    await this.resultsRepository.save(result)
+    return { message: "Natija muvaffaqiyatli yaratildi", result }
   }
 
-  findAll() {
-    return `This action returns all results`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} result`;
-  }
-
-  update(id: number, updateResultDto: UpdateResultDto) {
-    return `This action updates a #${id} result`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} result`;
+  async getUserResults(userId: number): Promise<Result[]> {
+    return this.resultsRepository.find({ where: { userId } })
   }
 }

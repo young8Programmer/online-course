@@ -35,7 +35,8 @@ export class AuthModule implements NestModule {
         "modules/create",
         "modules/courses/:courseId",
         "modules/:moduleId",
-        "modules/:modulesId/lessons"
+        "modules/:modulesId/lessons",
+        "modules/delete/:moduleId"
       );
 
     consumer

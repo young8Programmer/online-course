@@ -1,23 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Result } from '../../results/entities/result.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Result } from '../../results/entities/result.entity'
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  email: string;
+  email: string
 
   @Column()
-  password: string;
+  password: string
 
   @Column({ default: "student" })
-  role: string;
+  role: string
 
-  @OneToMany(() => Result, (result) => result.user)
-  results: Result[];
+  @OneToMany(() => Result, (result) => result.userId)
+  results: Result[]
 }
