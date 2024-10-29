@@ -46,17 +46,18 @@ export class CoursesService {
 
   async enrollUser(courseId: number, userId: number): Promise<any> {
     const course = await this.findOneCourse(courseId)
-    if (!course.enrolledUsers) {
+    if (!Array.isArray(course.enrolledUsers)) {
       course.enrolledUsers = []
     }
-  
-    if (!course.enrolledUsers.includes(userId)) {
-      course.enrolledUsers.push(userId)
-      await this.coursesRepository.save(course)
-      return { message: "Siz kursga muvaffaqiyatli yozildingiz" }
+
+    if (course.enrolledUsers.includes(userId)) {
+      return { message: "Siz allaqachon bu kursga yozilgansiz" }
     }
+  
+    course.enrolledUsers.push(userId)
+    await this.coursesRepository.save(course)
     
-    return { message: "Siz allaqachon bu kursga yozilgansiz" }
+    return { message: "Siz kursga muvaffaqiyatli yozildingiz" };
   }
   
 
