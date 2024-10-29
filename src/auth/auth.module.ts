@@ -17,6 +17,7 @@ import { RoleMiddleware } from '../middlewares/role.middleware';
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [TypeOrmModule]
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

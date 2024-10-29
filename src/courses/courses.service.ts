@@ -2,12 +2,15 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from './entities/course.entity';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class CoursesService {
   constructor(
     @InjectRepository(Course)
     private coursesRepository: Repository<Course>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>
   ) {}
 
   async createCourse(createCourseDto): Promise<any> {
@@ -44,21 +47,32 @@ export class CoursesService {
     return course
   }
 
-  async enrollUser(courseId: number, userId: number): Promise<any> {
-    const course = await this.findOneCourse(courseId)
-    if (!Array.isArray(course.enrolledUsers)) {
-      course.enrolledUsers = []
+  async enrollUser(courseId: number, userId: any): Promise<any> {
+    const user = await this.userRepository.findOne({ where: { id: userId } })
+    if (!user) {
+      return { message: "Bunday foydalanuvchi topilmadi" }
     }
+  
+    const course = await this.findOneCourse(courseId)
+    userId = Number(userId)
 
-    if (course.enrolledUsers.includes(userId)) {
+    const enrolledUsers = course.enrolledUsers.map(user => Number(user))
+  
+    if (enrolledUsers.includes(userId)) {
       return { message: "Siz allaqachon bu kursga yozilgansiz" }
     }
   
-    course.enrolledUsers.push(userId)
-    await this.coursesRepository.save(course)
-    
+    if (!course.enrolledUsers) {
+      course.enrolledUsers = []
+    }
+
+    course.enrolledUsers.push(userId.toString());
+    await this.coursesRepository.save(course);
+  
     return { message: "Siz kursga muvaffaqiyatli yozildingiz" };
   }
+  
+  
   
 
   async updateCourse(id: number, updateCourseDto): Promise<any> {
