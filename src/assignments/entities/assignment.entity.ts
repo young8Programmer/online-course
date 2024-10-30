@@ -1,12 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Lesson } from '../../lessons/entities/lesson.entity';
+import { Result } from '../../results/entities/result.entity';
 
 @Entity()
 export class Assignment {
   @PrimaryGeneratedColumn()
   id: number
-
-  @Column()
-  lessonId: number
 
   @Column()
   title: string
@@ -16,4 +15,10 @@ export class Assignment {
 
   @Column()
   score: number
+
+  @ManyToOne(() => Lesson, (lesson) => lesson.assignments)
+  lesson: Lesson
+
+  @OneToMany(() => Result, (result) => result.assignment)
+  results: Result[]
 }

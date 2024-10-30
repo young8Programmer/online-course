@@ -12,7 +12,7 @@ export class CoursesController {
 
   @Get("all")
   findAllCourses(@Query() filterDto) {
-    return this.coursesService.findAllCourses(filterDto)
+    return this.coursesService.findOneCourse(filterDto)
   }
 
   @Get("findOne/:id")

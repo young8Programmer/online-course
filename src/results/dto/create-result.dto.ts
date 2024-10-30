@@ -1,6 +1,10 @@
-import { IsNotEmpty, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateResultDto {
+  @IsNotEmpty()
+  @IsNumber()
+  score: number
+
   @IsNotEmpty()
   @IsNumber()
   userId: number
@@ -8,8 +12,4 @@ export class CreateResultDto {
   @IsNotEmpty()
   @IsNumber()
   assignmentId: number
-
-  @IsNotEmpty()
-  @IsNumber()
-  score: number
 }

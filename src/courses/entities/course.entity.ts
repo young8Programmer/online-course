@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm'
+import { User } from '../../auth/entities/user.entity'
 import { Modules } from '../../module/entities/module.entity'
 
 @Entity()
@@ -24,6 +25,9 @@ export class Course {
   @Column()
   level: string
 
-  @Column("simple-array", { default: [] })
-  enrolledUsers: number[]
+  @ManyToMany(() => User, (user) => user.enrolledCourses)
+  enrolledUsers: User[]
+
+  @OneToMany(() => Modules, (module) => module.course)
+  modules: Modules[]
 }

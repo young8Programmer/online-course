@@ -1,14 +1,12 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateLessonDto {
-  @IsNotEmpty()
-  @IsNumber()
-  courseId: number
-
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: "title bo'sh bo'lmasligi kerak" })
   title: string
 
-  @IsString()
-  content: string
+  @IsOptional()
+  content?: string
+
+  @IsNotEmpty({ message: "kurs id bo'sh bo'lmasligi kerak" })
+  courseId: number
 }

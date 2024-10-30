@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
-import { Lesson } from '../../lessons/entities/lesson.entity'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Lesson } from '../../lessons/entities/lesson.entity';
+import { Course } from '../../courses/entities/course.entity';
 
 @Entity()
 export class Modules {
@@ -11,6 +12,9 @@ export class Modules {
 
   @Column({ type: 'text', nullable: true })
   description: string
+
+  @ManyToOne(() => Course, (course) => course.modules)
+  course: Course
 
   @OneToMany(() => Lesson, (lesson) => lesson.modules)
   lessons: Lesson[]

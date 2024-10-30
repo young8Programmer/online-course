@@ -12,7 +12,7 @@ import { RoleMiddleware } from '../middlewares/role.middleware';
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: "Javascript",
-      signOptions: { expiresIn: '600s' }
+      signOptions: { expiresIn: '60s' }
     })
   ],
   controllers: [AuthController],
@@ -26,6 +26,7 @@ export class AuthModule implements NestModule {
       .forRoutes(
         "auth/update-user/:id",
         "auth/delete-user/:id",
+        "auth/users/all",
         "courses/create",
         "courses/update/:id",
         "courses/delete/:id",
@@ -39,10 +40,13 @@ export class AuthModule implements NestModule {
         "modules/delete/:moduleId",
         "lessons/create",
         "lessons/course/:courseId",
-        "modules/:moduleId/assignment",
-        "modules/:moduleId/results",
+        "assignments/:moduleId/assignment",
+        "assignments/:assignmentId/submit",
+        "assignments/:moduleId/assignments",
+        "assignments/:moduleId/results",
         "results/create",
-        "results/user/:userId"
+        "results/user/:userId",
+        "results/assignment/:assignmentId"
 
       );
 
@@ -58,7 +62,7 @@ export class AuthModule implements NestModule {
         "modules/update/:moduleId",
         "modules/delete/:moduleId",
         "lessons/create",
-        "modules/:moduleId/assignment",
+        "assignments/:moduleId/assignment",
         "results/create"
       );
   }

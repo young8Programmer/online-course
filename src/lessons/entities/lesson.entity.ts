@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm'
-import { Modules } from '../../module/entities/module.entity'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Modules } from '../../module/entities/module.entity';
+import { Assignment } from '../../assignments/entities/assignment.entity';
 
 @Entity()
 export class Lesson {
@@ -7,14 +8,14 @@ export class Lesson {
   id: number
 
   @Column()
-  courseId: number
-
-  @Column()
   title: string
 
   @Column({ type: 'text', nullable: true })
   content: string
 
-  @ManyToMany(() => Modules, (modules) => modules.lessons)
-  modules: Modules[]
+  @ManyToOne(() => Modules, (modules) => modules.lessons)
+  modules: Modules
+
+  @OneToMany(() => Assignment, (assignment) => assignment.lesson)
+  assignments: Assignment[]
 }

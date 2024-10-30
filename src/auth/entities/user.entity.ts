@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm'
+import { Course } from '../../courses/entities/course.entity'
 import { Result } from '../../results/entities/result.entity'
 
 @Entity()
@@ -18,6 +19,10 @@ export class User {
   @Column({ default: "student" })
   role: string
 
-  @OneToMany(() => Result, (result) => result.userId)
+  @ManyToMany(() => Course, (course) => course.enrolledUsers)
+  @JoinTable()
+  enrolledCourses: Course[]
+
+  @OneToMany(() => Result, (result) => result.user)
   results: Result[]
 }

@@ -16,7 +16,7 @@ export class CoursesService {
   async createCourse(createCourseDto): Promise<any> {
     const duplicateCourse = await this.coursesRepository.findOne({ where: { name: createCourseDto.name } })
     if (duplicateCourse) {
-      throw new BadRequestException("nu nomdagi kurs mavjud")
+      throw new BadRequestException("bu nomdagi kurs mavjud")
     }
     const course = this.coursesRepository.create(createCourseDto)
     await this.coursesRepository.save(course)
@@ -47,33 +47,26 @@ export class CoursesService {
     return course
   }
 
-  async enrollUser(courseId: number, userId: any): Promise<any> {
-    const user = await this.userRepository.findOne({ where: { id: userId } })
+  async enrollUser(courseId: number, userId: number): Promise<any> {
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['enrolledCourses'] });
     if (!user) {
-      return { message: "Bunday foydalanuvchi topilmadi" }
+        return { message: "Bunday foydalanuvchi topilmadi" }
     }
-  
+
     const course = await this.findOneCourse(courseId)
-    userId = Number(userId)
-
-    const enrolledUsers = course.enrolledUsers.map(user => Number(user))
-  
-    if (enrolledUsers.includes(userId)) {
-      return { message: "Siz bu kursga yozilgansiz" }
-    }
-  
-    if (!course.enrolledUsers) {
-      course.enrolledUsers = []
+    const enrolledCourses = user.enrolledCourses.map(enrolledCourse => enrolledCourse.id);
+    
+    if (enrolledCourses.includes(course.id)) {
+        return { message: "Siz bu kursga yozilgansiz" };
     }
 
-    course.enrolledUsers.push(userId.toString())
-    await this.coursesRepository.save(course)
-  
+    user.enrolledCourses.push(course)
+    await this.userRepository.save(user)
+
     return { message: "Siz kursga yozildingiz" }
-  }
-  
-  
-  
+}
+
+
 
   async updateCourse(id: number, updateCourseDto): Promise<any> {
     const course = await this.coursesRepository.findOneBy({ id })

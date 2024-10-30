@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, HttpStatus, Put, Delete, Param } from "@nestjs/common"
+import { Controller, Post, Body, Res, HttpStatus, Put, Delete, Param, Get, Req } from "@nestjs/common"
 import { AuthService } from "./auth.service"
 import { CreateUserDto } from './dto/create-user.dto'
 import { Response } from 'express'
@@ -10,7 +10,7 @@ export class AuthController {
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     await this.authService.register(createUserDto)
-    return res.status(HttpStatus.CREATED).json({ message: "User registratsiyadan o'tdi" })
+    return res.status(HttpStatus.CREATED).json({ message: "user registratsiyadan o'tdi" })
   }
 
   @Post("login")
@@ -18,7 +18,7 @@ export class AuthController {
     const { access_token, refresh_token } = await this.authService.login(email, password)
     res.cookie("access_token", access_token, { httpOnly: true })
     res.cookie("refresh_token", refresh_token, { httpOnly: true })
-    return res.status(HttpStatus.OK).json({ message: "Login muvaffaqiyatli", access_token, refresh_token })
+    return res.status(HttpStatus.OK).json({ message: "login muvaffaqiyatli", access_token, refresh_token })
   }
 
   @Put("update-user/:id")
@@ -27,16 +27,21 @@ export class AuthController {
     return res.status(HttpStatus.OK).json(user)
   }
 
+  @Get("users/all")
+  async getUsers(@Req() req: Request) {
+    return this.authService.findAll(req)
+  }
+
   @Delete("delete-user/:id")
   async deleteUser(@Param("id") id: number, @Res() res: Response) {
     await this.authService.deleteUser(id)
-    return res.status(HttpStatus.OK).json({ message: "O'chirildi" })
+    return res.status(HttpStatus.OK).json({ message: "o'chirildi" })
   }
 
   @Post("logout")
   logout(@Res() res: Response) {
     res.clearCookie("access_token")
     res.clearCookie("refresh_token")
-    return res.status(HttpStatus.OK).json({ message: "Chiqish" })
+    return res.status(HttpStatus.OK).json({ message: "chiqish" })
   }
 }
