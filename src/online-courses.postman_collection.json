@@ -12,24 +12,78 @@
 				{
 					"name": "register",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"vali\",\r\n    \"email\": \"reyimbergenovval434i234@gmail.com\",\r\n    \"password\": \"123434\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "login",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"reyimbergenovvali234@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "logout",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
 					},
 					"response": []
 				}
@@ -45,7 +99,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpNHdlcmRzMzRAZ21haWwuY29tIiwic3ViIjo2LCJpYXQiOjE3MzAwNTA4NzYsImV4cCI6MTczMDY1NTY3Nn0.8NasQ3owA3dNR1oPUNUKen1X3EQJWMjKMD0OIaAyxM4",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
 								"type": "text"
 							}
 						],
@@ -59,14 +113,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/courses",
+							"raw": "http://localhost:3000/courses/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"courses"
+								"courses",
+								"create"
 							]
 						}
 					},
@@ -75,8 +130,193 @@
 				{
 					"name": "update",
 					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"backend node.js\",\r\n    \"description\": \"Juda yaxshi kurs\",\r\n    \"price\": 0,\r\n    \"teacher\": \"Mironshoh\",\r\n    \"category\": \"Web dasturlash\",\r\n    \"level\": \"8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/courses/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/findOne/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"findOne",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enrollUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/courses/2/enroll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"2",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMjk5NzgyLCJleHAiOjE3MzA5MDQ1ODJ9.JCdXegHwRcsVwN3-JAKX0-Ga5qs2Cgv2wj5ooaDvEf8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"valii\",\r\n        \"email\": \"reyimbergenovvali234@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/update-user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"update-user",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -92,44 +332,26 @@
 					"name": "getAll",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "getOneId",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "enrollUser",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "users",
-			"item": [
-				{
-					"name": "update",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/auth/users/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"users",
+								"all"
+							]
+						}
 					},
 					"response": []
 				}
@@ -141,8 +363,35 @@
 				{
 					"name": "create",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": 1,\r\n    \"title\": \"backend\",\r\n    \"description\": \"ha yaxshi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/modules/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
@@ -150,7 +399,26 @@
 					"name": "getCourseId",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpNHdycmVlZWZnZGVlc2Zra2poZ2pocnJlZ2ZzZGZnc2RyZHMzNEBnbWFpbC5jb20iLCJzdWIiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDIxNzE1OCwiZXhwIjoxNzMwODIxOTU4fQ.2RdbypwdiRgbONbbdAUjDHvzj5thC7xxVZvEa0hl6bw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/modules/courses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"courses",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -158,23 +426,89 @@
 					"name": "getModuleIdLesson",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpNHdycmVlZWZnZGVlc2Zra2poZ2pocnJlZ2ZzZGZnc2RyZHMzNEBnbWFpbC5jb20iLCJzdWIiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDIxNzE1OCwiZXhwIjoxNzMwODIxOTU4fQ.2RdbypwdiRgbONbbdAUjDHvzj5thC7xxVZvEa0hl6bw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/modules/1/lessons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"1",
+								"lessons"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "update",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpNHdycmVlZWZnZGVlc2Zra2poZ2pocnJlZ2ZzZGZnc2RyZHMzNEBnbWFpbC5jb20iLCJzdWIiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDIxNzE1OCwiZXhwIjoxNzMwODIxOTU4fQ.2RdbypwdiRgbONbbdAUjDHvzj5thC7xxVZvEa0hl6bw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"2 -dars\",\r\n    \"description\": \"masalalar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/modules/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"update",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "delete",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/modules/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"delete",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -182,7 +516,25 @@
 					"name": "findOneModule",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/modules/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"2"
+							]
+						}
 					},
 					"response": []
 				}
@@ -194,8 +546,36 @@
 				{
 					"name": "create",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"2 -dars\",\r\n    \"content\": \"hahahaa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/lessons/create/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"lessons",
+								"create",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -203,7 +583,26 @@
 					"name": "getLessonsByCourse",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/lessons/course/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"lessons",
+								"course",
+								"2"
+							]
+						}
 					},
 					"response": []
 				}
@@ -213,10 +612,38 @@
 			"name": "assignments",
 			"item": [
 				{
-					"name": "create",
+					"name": "create\\",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"flowgatim\",\r\n    \"description\": \"flowgaritm nimaligi\",\r\n    \"lessonId\": 1,\r\n    \"score\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/assignments/1/assignment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"1",
+								"assignment"
+							]
+						}
 					},
 					"response": []
 				},
@@ -224,7 +651,96 @@
 					"name": "getResults",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/modules/2/results",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"modules",
+								"2",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submitResult",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"assignmentId\": 1,\r\n    \"userId\": 2,\r\n    \"score\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/assignments/3/submit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"3",
+								"submit"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAssignments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpNHdycmVlZWZnZGVlc2Zra2poZ2pocnJlZ2ZzZGZnc2RyZHMzNEBnbWFpbC5jb20iLCJzdWIiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDIxNzE1OCwiZXhwIjoxNzMwODIxOTU4fQ.2RdbypwdiRgbONbbdAUjDHvzj5thC7xxVZvEa0hl6bw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/assignments/1/assignments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"1",
+								"assignments"
+							]
+						}
 					},
 					"response": []
 				}
@@ -236,8 +752,35 @@
 				{
 					"name": "create",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"assignmentId\": 3,\r\n    \"userId\": 1,\r\n    \"score\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/results/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"results",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
@@ -245,7 +788,53 @@
 					"name": "getuserResults",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/results/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"results",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getResultsByAssignment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/results/assignment/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"results",
+								"assignment",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
