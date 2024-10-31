@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query } from "@nestjs/common"
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, BadRequestException } from "@nestjs/common";
 import { CoursesService } from './courses.service';
 
 @Controller('courses')
@@ -12,12 +12,16 @@ export class CoursesController {
 
   @Get("all")
   findAllCourses(@Query() filterDto) {
-    return this.coursesService.findOneCourse(filterDto)
+    return this.coursesService.findAllCourses(filterDto)
   }
 
   @Get("findOne/:id")
-  findOneCourse(@Param("id") id: number) {
-    return this.coursesService.findOneCourse(id)
+  findOneCourse(@Param("id") id: string) {
+    const courseId = Number(id)
+    if (isNaN(courseId)) {
+      throw new BadRequestException("id formati xato")
+    }
+    return this.coursesService.findOneCourse(courseId)
   }
 
   @Post(":id/enroll")

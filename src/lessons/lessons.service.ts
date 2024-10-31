@@ -11,7 +11,7 @@ export class LessonsService {
     @InjectRepository(Lesson)
     private lessonsRepository: Repository<Lesson>,
     @InjectRepository(Course)
-    private coursesRepository: Repository<Course>,
+    private coursesRepository: Repository<Course>
   ) {}
 
   async createLesson(createLessonDto: CreateLessonDto, courseId: number): Promise<any> {

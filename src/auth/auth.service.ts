@@ -50,8 +50,6 @@ export class AuthService {
     return []
   }
   
-  
-
   async deleteUser(id: number) {
     const user = await this.userRepository.findOneBy({ id })
     if (!user) throw new Error("user topilmadi")

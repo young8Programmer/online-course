@@ -1,18 +1,21 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Assignment } from "./entities/assignment.entity";
-import { Modules } from "../module/entities/module.entity";
-import { CreateAssignmentDto } from "./dto/create-assignment.dto";
-import { Result } from "../results/entities/result.entity";
-import { Lesson } from "../lessons/entities/lesson.entity";
-import { CreateResultDto } from "src/results/dto/create-result.dto";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
+import { InjectRepository } from "@nestjs/typeorm"
+import { Repository } from "typeorm"
+import { Assignment } from "./entities/assignment.entity"
+import { Modules } from "../module/entities/module.entity"
+import { CreateAssignmentDto } from "./dto/create-assignment.dto"
+import { Result } from "../results/entities/result.entity"
+import { Lesson } from "../lessons/entities/lesson.entity"
+import { CreateResultDto } from "src/results/dto/create-result.dto"
+import { User } from "src/auth/entities/user.entity"
 
 @Injectable()
 export class AssignmentsService {
   constructor(
     @InjectRepository(Assignment)
     private assignmentsRepository: Repository<Assignment>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     @InjectRepository(Result)
     private resultsRepository: Repository<Result>,
     @InjectRepository(Modules)
@@ -23,18 +26,26 @@ export class AssignmentsService {
 
   async createAssignment(moduleId: number, createAssignmentDto: CreateAssignmentDto): Promise<any> {
     const module = await this.modulesRepository.findOne({
-      where: { id: moduleId },
-      relations: ["lessons"]
+        where: { id: moduleId },
+        relations: ["lessons"]
     })
     
     if (!module) {
-      throw new NotFoundException("bunday id li modul yo'q")
+        throw new NotFoundException("bunday id li modul yo'q")
     }
 
     const lesson = await this.lessonsRepository.findOne({ where: { id: createAssignmentDto.lessonId } })
     
     if (!lesson) {
-      throw new NotFoundException("bunday dars topilmadi")
+        throw new NotFoundException("bunday dars topilmadi")
+    }
+
+    const currentAssignment = await this.assignmentsRepository.findOne({
+        where: { lesson: { id: lesson.id }, title: createAssignmentDto.title }
+    })
+
+    if (currentAssignment) {
+        return { message: "Bu topshiriq mavjud", assignment: currentAssignment }
     }
 
     const assignment = this.assignmentsRepository.create({ ...createAssignmentDto, lesson })
@@ -43,16 +54,42 @@ export class AssignmentsService {
     return { message: "dars yaratildi", assignment }
   }
 
+
   async submitResult(assignmentId: number, resultDto: CreateResultDto): Promise<any> {
-    const assignment = await this.assignmentsRepository.findOne({ where: { id: assignmentId } })
-    
+    const assignment = await this.assignmentsRepository.findOne({
+        where: { id: assignmentId },
+        relations: ["lesson", "lesson.modules"]
+    })
+
     if (!assignment) {
-      throw new NotFoundException("bunday topshiriq mavjud emas")
+        throw new NotFoundException("bunday topshiriq mavjud emas")
     }
 
-    const result = this.resultsRepository.create({ ...resultDto, assignment })
+    const user = await this.userRepository.findOne({ where: { id: resultDto.userId } })
+
+    if (!user) {
+        throw new NotFoundException("user topilmadi")
+    }
+
+    const userEnrolled = await this.resultsRepository.findOne({
+        where: { user: { id: user.id }, assignment: { lesson: { modules: { id: assignment.lesson.modules.id } } } }
+    })
+
+    if (!userEnrolled) {
+        throw new BadRequestException("bu kursga yozilmagansiz")
+    }
+
+    const currentResult = await this.resultsRepository.findOne({
+        where: { assignment: { id: assignmentId }, user: { id: user.id } }
+    })
+
+    if (currentResult) {
+        return { message: "bu topshiriq uchun natijani berib bo'lgansiz", result: currentResult }
+    }
+
+    const result = this.resultsRepository.create({ ...resultDto, assignment, user })
     await this.resultsRepository.save(result)
-    
+
     return { message: "natija saqlandi", result }
   }
 
