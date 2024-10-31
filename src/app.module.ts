@@ -11,7 +11,7 @@ import { ResultsModule } from './results/results.module';
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "dev",
+      host: "db",
       port: 5432,
       username: "postgres",
       password: "1234",
