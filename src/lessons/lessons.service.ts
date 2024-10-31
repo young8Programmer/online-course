@@ -41,5 +41,11 @@ export class LessonsService {
 
     return this.lessonsRepository.find({ where: { modules: In(moduleIds) } })
   }
+
+  async getAllLessons(): Promise<Lesson[]> {
+    return this.lessonsRepository.find({
+      relations: ['modules', 'modules.course']
+    })
+  }
   
 }

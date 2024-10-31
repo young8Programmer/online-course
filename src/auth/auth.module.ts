@@ -40,6 +40,7 @@ export class AuthModule implements NestModule {
         "modules/delete/:moduleId",
         "lessons/create",
         "lessons/course/:courseId",
+        "lessons/all",
         "assignments/:moduleId/assignment",
         "assignments/:assignmentId/submit",
         "assignments/:moduleId/assignments",

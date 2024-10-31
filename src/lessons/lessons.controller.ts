@@ -15,4 +15,9 @@ export class LessonsController {
   getLessonsByCourse(@Param("courseId") courseId: number) {
     return this.lessonsService.getLessonsByCourse(courseId)
   }
+
+  @Get("all")
+  async getAllLessons() {
+    return this.lessonsService.getAllLessons()
+  }
 }

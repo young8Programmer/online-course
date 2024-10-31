@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"vali\",\r\n    \"email\": \"reyimbergenovval434i234@gmail.com\",\r\n    \"password\": \"123434\"\r\n}",
+							"raw": "{\r\n    \"name\": \"vali\",\r\n    \"email\": \"reyimbergenovval434ewei234@gmail.com\",\r\n    \"password\": \"123454334\",\r\n    \"role\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"reyimbergenovvali234@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"reyimbergenovval434ewei234@gmail.com\",\r\n    \"password\": \"123454334\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,7 +105,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"backend node.js\",\r\n    \"description\": \"Juda yaxshi kurs\",\r\n    \"price\": 0,\r\n    \"teacher\": \"Mironshoh\",\r\n    \"category\": \"Web dasturlash\",\r\n    \"level\": \"8\"\r\n}",
+							"raw": "{\r\n    \"name\": \"backend11 node.js\",\r\n    \"description\": \"Juda yaxshi kurs\",\r\n    \"price\": 0,\r\n    \"teacher\": \"Mironshoh\",\r\n    \"category\": \"Web dasturlash\",\r\n    \"level\": \"8\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,7 +175,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/courses/delete/1",
+							"raw": "http://localhost:3000/courses/delete/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -184,7 +184,7 @@
 							"path": [
 								"courses",
 								"delete",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -197,7 +197,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWw0MzRld2VpMjM0QGdtYWlsLmNvbSIsInN1YiI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzcyODcyLCJleHAiOjE3MzA5Nzc2NzJ9.c7hZer6Dh7e05pQ7RHJByd0HbM2Sq5TLhM_VnTbacF0",
 								"type": "text"
 							}
 						],
@@ -228,7 +228,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/courses/findOne/2",
+							"raw": "http://localhost:3000/courses/findOne/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -237,7 +237,7 @@
 							"path": [
 								"courses",
 								"findOne",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -256,7 +256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 2\r\n}",
+							"raw": "{\r\n    \"userId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -264,7 +264,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/courses/2/enroll",
+							"raw": "http://localhost:3000/courses/1/enroll",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -272,7 +272,7 @@
 							"port": "3000",
 							"path": [
 								"courses",
-								"2",
+								"1",
 								"enroll"
 							]
 						}
@@ -323,8 +323,27 @@
 				{
 					"name": "delete",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJleWltYmVyZ2Vub3Z2YWxpMjM0QGdtYWlsLmNvbSIsInN1YiI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMzAzNzM4LCJleHAiOjE3MzA5MDg1Mzh9.QJY4L9SdpqflyebLQsSDUb1ipC3S7I-7V6hMt-NdkrQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/auth/delete-user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"delete-user",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -524,7 +543,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/modules/2",
+							"raw": "http://localhost:3000/modules/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -532,7 +551,7 @@
 							"port": "3000",
 							"path": [
 								"modules",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -591,7 +610,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/lessons/course/2",
+							"raw": "http://localhost:3000/lessons/course/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -600,7 +619,7 @@
 							"path": [
 								"lessons",
 								"course",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -659,15 +678,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/modules/2/results",
+							"raw": "http://localhost:3000/assignments/1/results",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"modules",
-								"2",
+								"assignments",
+								"1",
 								"results"
 							]
 						}
@@ -687,7 +706,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"assignmentId\": 1,\r\n    \"userId\": 2,\r\n    \"score\": 5\r\n}",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"score\": 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
