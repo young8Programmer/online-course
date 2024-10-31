@@ -14,7 +14,7 @@ export class ResultsService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     @InjectRepository(Assignment)
-    private assignmentsRepository: Repository<Assignment>,
+    private assignmentsRepository: Repository<Assignment>
   ) {}
 
   async createResult(createResultDto: CreateResultDto): Promise<any> {
