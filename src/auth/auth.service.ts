@@ -21,6 +21,10 @@ export class AuthService {
     await this.userRepository.save(user)
   }
 
+  async findByEmail(email: string) {
+    return await this.userRepository.findOneBy({ email })
+  }
+
   async updateUser(id: number, updateUserDto: CreateUserDto) {
     const user = await this.userRepository.findOneBy({ id })
     if (!user) throw new Error('user topilmadi')

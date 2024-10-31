@@ -9,9 +9,16 @@ export class AuthController {
 
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    await this.authService.register(createUserDto)
-    return res.status(HttpStatus.CREATED).json({ message: "user registratsiyadan o'tdi" })
+  const existingUser = await this.authService.findByEmail(createUserDto.email)
+
+  if (existingUser) {
+    return res.status(HttpStatus.BAD_REQUEST).json({ message: "Siz allaqachon ro'yxatdan o'tgansiz" });
   }
+  
+  await this.authService.register(createUserDto);
+  return res.status(HttpStatus.CREATED).json({ message: "user registratsiyadan o'tdi" })
+  }
+
 
   @Post("login")
   async login(@Body() { email, password }: { email: string; password: string }, @Res() res: Response) {
@@ -20,6 +27,7 @@ export class AuthController {
     res.cookie("refresh_token", refresh_token, { httpOnly: true })
     return res.status(HttpStatus.OK).json({ message: "login muvaffaqiyatli", access_token, refresh_token })
   }
+
 
   @Put("update-user/:id")
   async updateUser(@Param("id") id: number, @Body() updateUserDto: CreateUserDto, @Res() res: Response) {
