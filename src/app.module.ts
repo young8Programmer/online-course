@@ -15,7 +15,7 @@ import { ResultsModule } from './results/results.module';
       port: 5432,
       username: "postgres",
       password: "1234",
-      database: "n99",
+      database: "n999999",
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),

@@ -54,12 +54,11 @@ export class AssignmentsService {
     return { message: "dars yaratildi", assignment }
   }
 
-
   async submitResult(assignmentId: number, resultDto: CreateResultDto): Promise<any> {
     const assignment = await this.assignmentsRepository.findOne({
         where: { id: assignmentId },
-        relations: ["lesson", "lesson.modules"]
-    })
+        relations: ["lesson", "lesson.modules", "lesson.modules.course"]
+    });
 
     if (!assignment) {
         throw new NotFoundException("bunday topshiriq mavjud emas")
@@ -71,39 +70,48 @@ export class AssignmentsService {
         throw new NotFoundException("user topilmadi")
     }
 
-    const userEnrolled = await this.resultsRepository.findOne({
-        where: { user: { id: user.id }, assignment: { lesson: { modules: { id: assignment.lesson.modules.id } } } }
-    })
+    const userEnrolled = await this.userRepository
+        .createQueryBuilder("user")
+        .innerJoin("user.enrolledCourses", "course")
+        .where("course.id = :courseId", { courseId: assignment.lesson.modules.course.id })
+        .andWhere("user.id = :userId", { userId: user.id })
+        .getOne();
 
     if (!userEnrolled) {
-        throw new BadRequestException("bu kursga yozilmagansiz")
+        throw new BadRequestException("bu topshiriqni kursiga yozilmagansiz")
     }
 
     const currentResult = await this.resultsRepository.findOne({
         where: { assignment: { id: assignmentId }, user: { id: user.id } }
-    })
+    });
 
     if (currentResult) {
-        return { message: "bu topshiriq uchun natijani berib bo'lgansiz", result: currentResult }
+        return { message: "bu topshiriq uchun javob yuborgansiz"}
     }
 
     const result = this.resultsRepository.create({ ...resultDto, assignment, user })
     await this.resultsRepository.save(result)
 
-    return { message: "natija saqlandi", result }
+    return { message: "topshiriq uchun javob saqlandi"}
   }
 
-  async getResultsByModule(moduleId: number): Promise<any> {
-    return this.resultsRepository.find({
-      where: { assignment: { lesson: { modules: { id: moduleId } } } },
-      relations: ["assignment"]
-    })
-  }
 
   async getAssignments(moduleId: number): Promise<Assignment[]> {
     return this.assignmentsRepository.find({
       where: { lesson: { modules: { id: moduleId } } },
       relations: ["lesson"]
     })
+  }
+
+  async deleteAssignment(id: number): Promise<string> {
+    const assignment = await this.assignmentsRepository.findOne({ where: { id } })
+
+    if (!assignment) {
+      throw new NotFoundException("bunday topshiriq topilmadi")
+    }
+
+    await this.assignmentsRepository.remove(assignment)
+
+    return "topshiriq muvaffaqiyatli o'chirildi"
   }
 }

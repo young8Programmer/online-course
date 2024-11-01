@@ -13,9 +13,9 @@ export class Lesson {
   @Column({ type: 'text', nullable: true })
   content: string
 
-  @ManyToOne(() => Modules, (modules) => modules.lessons)
+  @ManyToOne(() => Modules, (modules) => modules.lessons, {onDelete: "CASCADE"})
   modules: Modules
 
-  @OneToMany(() => Assignment, (assignment) => assignment.lesson)
+  @OneToMany(() => Assignment, (assignment) => assignment.lesson, {onDelete: "CASCADE"})
   assignments: Assignment[]
 }

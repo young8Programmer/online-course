@@ -28,6 +28,6 @@ export class Course {
   @ManyToMany(() => User, (user) => user.enrolledCourses)
   enrolledUsers: User[]
 
-  @OneToMany(() => Modules, (module) => module.course)
+  @OneToMany(() => Modules, (module) => module.course, {onDelete: "CASCADE"})
   modules: Modules[]
 }

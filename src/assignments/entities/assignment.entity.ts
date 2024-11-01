@@ -16,9 +16,9 @@ export class Assignment {
   @Column()
   score: number
 
-  @ManyToOne(() => Lesson, (lesson) => lesson.assignments)
+  @ManyToOne(() => Lesson, (lesson) => lesson.assignments, {onDelete: "CASCADE"})
   lesson: Lesson
 
-  @OneToMany(() => Result, (result) => result.assignment)
+  @OneToMany(() => Result, (result) => result.assignment, {onDelete: "CASCADE"})
   results: Result[]
 }

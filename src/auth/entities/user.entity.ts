@@ -19,10 +19,10 @@ export class User {
   @Column({ default: "student" })
   role: string
 
-  @ManyToMany(() => Course, (course) => course.enrolledUsers)
+  @ManyToMany(() => Course, (course) => course.enrolledUsers, {cascade: true})
   @JoinTable()
   enrolledCourses: Course[]
 
-  @OneToMany(() => Result, (result) => result.user)
+  @OneToMany(() => Result, (result) => result.user, {onDelete: "CASCADE"})
   results: Result[]
 }

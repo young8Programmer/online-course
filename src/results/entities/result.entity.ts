@@ -7,12 +7,15 @@ export class Result {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column("text")
+  solution: string
+
+  @Column({default: 100})
   score: number
 
-  @ManyToOne(() => User, (user) => user.results)
+  @ManyToOne(() => User, (user) => user.results, {onDelete: "CASCADE"})
   user: User
 
-  @ManyToOne(() => Assignment, (assignment) => assignment.results)
+  @ManyToOne(() => Assignment, (assignment) => assignment.results, {onDelete: "CASCADE"})
   assignment: Assignment
 }

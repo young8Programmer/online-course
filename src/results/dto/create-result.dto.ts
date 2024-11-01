@@ -1,9 +1,8 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, isString } from 'class-validator';
 
 export class CreateResultDto {
-  @IsNotEmpty()
-  @IsNumber()
-  score: number
+  @IsNotEmpty({message: "maydon bo'sh bo'lmasligi kerak"})
+  solution: string
 
   @IsNotEmpty()
   @IsNumber()

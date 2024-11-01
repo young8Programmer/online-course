@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { In, Repository } from 'typeorm'
-import { Lesson } from './entities/lesson.entity'
-import { Course } from '../courses/entities/course.entity'
-import { CreateLessonDto } from './dto/create-lesson.dto'
+import { InjectRepository } from '@nestjs/typeorm';
+import { In, Repository } from 'typeorm';
+import { Lesson } from './entities/lesson.entity';
+import { Course } from '../courses/entities/course.entity';
+import { CreateLessonDto } from './dto/create-lesson.dto';
 
 @Injectable()
 export class LessonsService {
@@ -37,9 +37,9 @@ export class LessonsService {
     }
   
     const modules = course.modules
-    const moduleIds = modules.map(module => module.id)
+    const moduleId = modules.map(module => module.id)
 
-    return this.lessonsRepository.find({ where: { modules: In(moduleIds) } })
+    return this.lessonsRepository.find({ where: { modules: In(moduleId) } })
   }
 
   async getAllLessons(): Promise<Lesson[]> {
@@ -47,5 +47,33 @@ export class LessonsService {
       relations: ['modules', 'modules.course']
     })
   }
-  
+
+  async updateLesson(id: number, updateLessonDto: CreateLessonDto): Promise<any> {
+    const lesson = await this.lessonsRepository.findOne({ where: { id } })
+    if (!lesson) {
+      throw new NotFoundException("bunday dars topilmadi")
+    }
+
+
+    if (updateLessonDto.title && updateLessonDto.title !== lesson.title) {
+      const duplicateLesson = await this.lessonsRepository.findOne({ where: { title: updateLessonDto.title } })
+      if (duplicateLesson) {
+        throw new BadRequestException("bu dars mavjud")
+      }
+    }
+
+    Object.assign(lesson, updateLessonDto)
+    await this.lessonsRepository.save(lesson)
+    return { message: "dars yangilandi", lesson }
+  }
+
+  async deleteLesson(id: number): Promise<any> {
+    const lesson = await this.lessonsRepository.findOne({ where: { id } })
+    if (!lesson) {
+      throw new NotFoundException("bunday dars topilmadi")
+    }
+
+    await this.lessonsRepository.remove(lesson)
+    return { message: "dars o'chirildi" }
+  }
 }

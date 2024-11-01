@@ -41,11 +41,12 @@ export class AuthModule implements NestModule {
         "lessons/create",
         "lessons/course/:courseId",
         "lessons/all",
+        "lessons/update/:id",
+        "lessons/delete/:id",
         "assignments/:moduleId/assignment",
         "assignments/:assignmentId/submit",
         "assignments/:moduleId/assignments",
-        "assignments/:moduleId/results",
-        "results/create",
+        "assignments/delete/:id",
         "results/user/:userId",
         "results/assignment/:assignmentId"
 
@@ -63,8 +64,11 @@ export class AuthModule implements NestModule {
         "modules/update/:moduleId",
         "modules/delete/:moduleId",
         "lessons/create",
+        "lessons/update/:id",
+        "lessons/delete/:id",
         "assignments/:moduleId/assignment",
-        "results/create"
+        "assignments/delete/:id",
+        "results/assignment/:assignmentId"
       );
   }
 }

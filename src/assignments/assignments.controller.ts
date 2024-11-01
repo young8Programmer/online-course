@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from "@nestjs/common"
+import { Controller, Get, Post, Body, Param, Delete, NotFoundException, ParseIntPipe } from "@nestjs/common"
 import { AssignmentsService } from './assignments.service'
 import { CreateAssignmentDto } from './dto/create-assignment.dto'
 import { CreateResultDto } from "src/results/dto/create-result.dto"
@@ -28,8 +28,9 @@ export class AssignmentsController {
     return this.assignmentsService.getAssignments(moduleId)
   }
 
-  @Get(":moduleId/results")
-  getResults(@Param("moduleId") moduleId: number) {
-    return this.assignmentsService.getResultsByModule(moduleId)
+  @Delete('delete/:id')
+  async deleteAssignment(@Param('id', ParseIntPipe) id: number): Promise<{ message: string }> {
+    const message = await this.assignmentsService.deleteAssignment(id)
+    return { message }
   }
 }

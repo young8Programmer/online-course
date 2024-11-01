@@ -9,9 +9,9 @@ export class AuthController {
 
   @Post("register")
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-  const existingUser = await this.authService.findByEmail(createUserDto.email)
+  const currentUser = await this.authService.findByEmail(createUserDto.email)
 
-  if (existingUser) {
+  if (currentUser) {
     return res.status(HttpStatus.BAD_REQUEST).json({ message: "Siz allaqachon ro'yxatdan o'tgansiz" });
   }
   
