@@ -27,6 +27,7 @@ export class AuthModule implements NestModule {
         "auth/update-user/:id",
         "auth/delete-user/:id",
         "auth/users/all",
+        "auth/logout",
         "courses/create",
         "courses/update/:id",
         "courses/delete/:id",

@@ -12,7 +12,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: n99
+      POSTGRES_DB: online_courses
     depends_on:
       db:
         condition: service_healthy
@@ -24,7 +24,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: n99
+      POSTGRES_DB: online_courses
     ports:
       - "5432:5432"
     volumes:

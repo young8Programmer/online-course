@@ -15,7 +15,7 @@ import { ResultsModule } from './results/results.module';
       port: 5432,
       username: "postgres",
       password: "1234",
-      database: "n999999",
+      database: "online_courses",
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
